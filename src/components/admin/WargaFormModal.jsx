@@ -1,4 +1,5 @@
 import { FiX } from "react-icons/fi";
+import Modal from "../common/Modal";
 
 const WargaFormModal = ({
   showForm,
@@ -13,28 +14,18 @@ const WargaFormModal = ({
   if (!showForm) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4"
-      onClick={() => setShowForm(false)}
-    >
-      <div
-        className="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between mb-5">
-          <p className="font-bold text-slate-900 text-base">
-            {editData ? "Edit Data Warga" : "Tambah Warga Baru"}
-          </p>
+    <Modal onClose={() => setShowForm(false)} maxWidth="max-w-sm">
+      <div className="flex items-center justify-between mb-5">
+        <p className="font-bold text-slate-900 text-base">
+          {editData ? "Edit Data Warga" : "Tambah Warga Baru"}
+        </p>
 
-          <button
-            onClick={() => setShowForm(false)}
-            className="text-slate-400 hover:text-slate-600"
-          >
-            <FiX className="w-5 h-5" />
-          </button>
-        </div>
+        <button onClick={() => setShowForm(false)}>
+          <FiX />
+        </button>
+      </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
           {[
             { label: "Nama Lengkap", field: "nama", placeholder: "Contoh: Budi Santoso" },
             { label: "NIK (16 digit)", field: "nik", placeholder: "16 digit NIK", maxLen: 16, numeric: true },
@@ -130,8 +121,7 @@ const WargaFormModal = ({
               : "Tambah Warga"}
           </button>
         </form>
-      </div>
-    </div>
+    </Modal>
   );
 };
 

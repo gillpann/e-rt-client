@@ -1,6 +1,7 @@
 import { FiX } from "react-icons/fi";
 import { STATUS_CONFIG } from "../../utils/Status";
 import { formatTanggal } from "../../utils/format";
+import Modal from './../common/Modal';
 
 const DetailModal = ({
   selected,
@@ -13,14 +14,7 @@ const DetailModal = ({
   if (!selected) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4"
-      onClick={() => setSelected(null)}
-    >
-      <div
-        className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <Modal onClose={() => setSelected(null)} maxWidth="max-w-md">
         <div className="flex items-center justify-between mb-5">
           <div>
             <p className="font-bold text-slate-900 text-base">
@@ -153,8 +147,7 @@ const DetailModal = ({
             Tutup
           </button>
         </div>
-      </div>
-    </div>
+      </Modal>
   );
 };
 
