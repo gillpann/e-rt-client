@@ -31,7 +31,7 @@ export default function DashboardLayout({ navItems, role = "warga", userName = "
           fixed top-0 left-0 h-full w-60 bg-white border-r border-slate-100 z-30
           flex flex-col transition-transform duration-200
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 lg:static lg:z-auto
+          lg:sticky lg:top-0 lg:h-screen lg:z-auto lg:translate-x-0
         `}
       >
         {/* Logo */}
@@ -57,7 +57,7 @@ export default function DashboardLayout({ navItems, role = "warga", userName = "
         </div>
 
         {/* Nav items */}
-        <nav className="flex-1 px-3 py-2 flex flex-col gap-0.5 overflow-y-auto">
+        <nav className="flex-1 px-3 py-2 flex flex-col gap-1 overflow-y-auto">
           {navItems.map((item) => (
             <NavLink
               key={item.to}

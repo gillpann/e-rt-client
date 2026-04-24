@@ -1,5 +1,6 @@
 import { STATUS_CONFIG } from "../../utils/Status";
 import { formatTanggal } from "../../utils/format";
+import StatusBadge from './StatusBadge';
 
 const PengajuanTable = ({ data, onDetail }) => {
   return (
@@ -48,9 +49,7 @@ const PengajuanTable = ({ data, onDetail }) => {
                   </td>
 
                   <td className="px-5 py-3.5">
-                    <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border whitespace-nowrap ${cfg.bg} ${cfg.text} ${cfg.border}`}>
-                      {cfg.label}
-                    </span>
+                    <StatusBadge status={item.status} />
                   </td>
 
                   <td className="px-5 py-3.5">
