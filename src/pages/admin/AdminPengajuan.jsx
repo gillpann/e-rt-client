@@ -7,6 +7,9 @@ import StatCards from "../../components/admin/StatCards";
 import FilterButtons from "../../components/admin/FilterButtons";
 import PengajuanTable from "../../components/admin/PengajuanTable";
 import DetailModal from "../../components/admin/DetailModal";
+import Pagination from "../../components/admin/Pagination";
+
+const ITEMS_PER_PAGE = 6;
 
 export default function AdminPengajuan() {
   const [data, setData]         = useState([]);
@@ -15,6 +18,7 @@ export default function AdminPengajuan() {
   const [selected, setSelected] = useState(null);
   const [catatan, setCatatan]   = useState("");
   const [updating, setUpdating] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const fetchData = async () => {
     try {
@@ -29,8 +33,17 @@ export default function AdminPengajuan() {
 
   useEffect(() => { fetchData(); }, []);
 
+  useEffect(() => { setCurrentPage(1); }, [filter]);
+
   const filtered = data.filter((d) =>
     filter === "Semua" ? true : d.status === filter.toLowerCase()
+  );
+
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+
+  const paginated = filtered.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
   );
 
   const counts = {
@@ -85,9 +98,16 @@ export default function AdminPengajuan() {
       <FilterButtons filter={filter} setFilter={setFilter} />
 
       {/* Table */}
-      <PengajuanTable 
-        data={filtered} 
-        onDetail={openDetail} 
+      <PengajuanTable
+        data={paginated}
+        onDetail={openDetail}
+      />
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
       />
 
       {/* Modal Detail */}

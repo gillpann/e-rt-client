@@ -8,6 +8,7 @@ import WargaFormModal from "../../components/admin/WargaFormModal";
 import WargaSummary from "../../components/admin/WargaSummary";
 import SearchInput from "../../components/admin/SearchInput";
 import ConfirmDeleteModal from "../../components/admin/ConfirmDeleteModal";
+import Pagination from "../../components/admin/Pagination";
 
 import { validateWargaForm } from "../../utils/validation";
 
@@ -20,11 +21,13 @@ const EMPTY_FORM = {
   status: "aktif",
 };
 
+const ITEMS_PER_PAGE = 5;
+
 export default function AdminWarga() {
   const [warga, setWarga] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔥 search + debounce
+  // search + debounce
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
@@ -34,6 +37,7 @@ export default function AdminWarga() {
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [hapusId, setHapusId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const fetchWarga = async () => {
     try {
@@ -54,13 +58,22 @@ export default function AdminWarga() {
     const handler = setTimeout(() => {
       setDebouncedSearch(search);
     }, 300);
-
     return () => clearTimeout(handler);
   }, [search]);
+
+  // Reset halaman saat search berubah
+  useEffect(() => { setCurrentPage(1); }, [debouncedSearch]);
 
   const filtered = warga.filter((w) =>
     w.nama.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
     w.nik.includes(debouncedSearch)
+  );
+
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+
+  const paginated = filtered.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
   );
 
   const openTambah = () => {
@@ -160,12 +173,19 @@ export default function AdminWarga() {
       {/* Search */}
       <SearchInput search={search} setSearch={setSearch} />
 
-      {/* Table */}
+      {/* Table — kirim paginated, bukan filtered */}
       <WargaTable
         warga={warga}
-        filtered={filtered}
+        filtered={paginated}
         openEdit={openEdit}
         setHapusId={setHapusId}
+      />
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
       />
 
       {/* Modal Form */}
