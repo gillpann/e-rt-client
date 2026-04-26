@@ -1,6 +1,6 @@
 import { STATUS_CONFIG } from "../../utils/Status";
 import { formatTanggal } from "../../utils/format";
-import StatusBadge from './StatusBadge';
+import StatusBadge from './../common/StatusBadge';
 
 const PengajuanTable = ({ data, onDetail }) => {
   return (

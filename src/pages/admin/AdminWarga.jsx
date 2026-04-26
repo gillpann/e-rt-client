@@ -1,65 +1,39 @@
-import { useState, useEffect } from "react";
-import api from "../../api/axios";
-import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 import { FiLoader, FiPlus } from "react-icons/fi";
+import { useWarga } from "../../hooks/useWarga";
 
-import WargaTable from "../../components/admin/WargaTable";
-import WargaFormModal from "../../components/admin/WargaFormModal";
-import WargaSummary from "../../components/admin/WargaSummary";
-import SearchInput from "../../components/admin/SearchInput";
+import WargaTable         from "../../components/admin/WargaTable";
+import WargaFormModal     from "../../components/admin/WargaFormModal";
+import WargaSummary       from "../../components/admin/WargaSummary";
+import SearchInput        from "../../components/admin/SearchInput";
 import ConfirmDeleteModal from "../../components/admin/ConfirmDeleteModal";
-import Pagination from "../../components/admin/Pagination";
-
-import { validateWargaForm } from "../../utils/validation";
-
-const EMPTY_FORM = {
-  nama: "",
-  nik: "",
-  no_hp: "",
-  alamat: "",
-  password: "",
-  status: "aktif",
-};
+import Pagination         from "../../components/admin/Pagination";
 
 const ITEMS_PER_PAGE = 5;
 
 export default function AdminWarga() {
-  const [warga, setWarga] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    warga,
+    loading,
+    search,
+    setSearch,
+    debouncedSearch,
+    showForm,
+    setShowForm,
+    editData,
+    form,
+    setForm,
+    formError,
+    submitting,
+    hapusId,
+    setHapusId,
+    openTambah,
+    openEdit,
+    handleSubmit,
+    handleHapus,
+  } = useWarga();
 
-  // search + debounce
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-
-  const [showForm, setShowForm] = useState(false);
-  const [editData, setEditData] = useState(null);
-  const [form, setForm] = useState(EMPTY_FORM);
-  const [formError, setFormError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [hapusId, setHapusId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const fetchWarga = async () => {
-    try {
-      const res = await api.get("/warga");
-      setWarga(res.data.warga);
-    } catch (err) {
-      toast.error("Gagal memuat data warga.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchWarga();
-  }, []);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [search]);
 
   // Reset halaman saat search berubah
   useEffect(() => { setCurrentPage(1); }, [debouncedSearch]);
@@ -70,70 +44,10 @@ export default function AdminWarga() {
   );
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
-
-  const paginated = filtered.slice(
+  const paginated  = filtered.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
-
-  const openTambah = () => {
-    setEditData(null);
-    setForm(EMPTY_FORM);
-    setFormError("");
-    setShowForm(true);
-  };
-
-  const openEdit = (w) => {
-    setEditData(w);
-    setForm({
-      nama: w.nama,
-      nik: w.nik,
-      no_hp: w.no_hp || "",
-      alamat: w.alamat || "",
-      password: "",
-      status: w.status,
-    });
-    setFormError("");
-    setShowForm(true);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setFormError("");
-
-    const error = validateWargaForm(form, editData);
-    if (error) return setFormError(error);
-
-    setSubmitting(true);
-    try {
-      if (editData) {
-        await api.put(`/warga/${editData.id}`, form);
-        toast.success("Data warga berhasil diupdate.");
-      } else {
-        await api.post("/warga", form);
-        toast.success("Warga baru berhasil ditambahkan.");
-      }
-
-      setShowForm(false);
-      fetchWarga();
-    } catch (err) {
-      setFormError(err.response?.data?.message || "Terjadi kesalahan.");
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const handleHapus = async () => {
-    try {
-      await api.delete(`/warga/${hapusId}`);
-      toast.success("Warga berhasil dihapus.");
-      setHapusId(null);
-      fetchWarga();
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Gagal menghapus warga.");
-      setHapusId(null);
-    }
-  };
 
   if (loading) {
     return (
@@ -157,7 +71,6 @@ export default function AdminWarga() {
             Kelola daftar warga terdaftar di RT 03 / RW 08.
           </p>
         </div>
-
         <button
           onClick={openTambah}
           className="bg-primary-700 hover:bg-primary-800 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all flex items-center gap-2 shrink-0"
@@ -167,13 +80,11 @@ export default function AdminWarga() {
         </button>
       </div>
 
-      {/* Summary */}
       <WargaSummary warga={warga} />
 
-      {/* Search */}
       <SearchInput search={search} setSearch={setSearch} />
 
-      {/* Table — kirim paginated, bukan filtered */}
+      {/* Kirim paginated, bukan filtered langsung */}
       <WargaTable
         warga={warga}
         filtered={paginated}
@@ -181,14 +92,12 @@ export default function AdminWarga() {
         setHapusId={setHapusId}
       />
 
-      {/* Pagination */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
 
-      {/* Modal Form */}
       <WargaFormModal
         showForm={showForm}
         setShowForm={setShowForm}
@@ -200,7 +109,6 @@ export default function AdminWarga() {
         submitting={submitting}
       />
 
-      {/* Confirm Delete */}
       <ConfirmDeleteModal
         hapusId={hapusId}
         setHapusId={setHapusId}
