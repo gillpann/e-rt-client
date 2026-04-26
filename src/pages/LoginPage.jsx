@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { saveAuth, getRedirectPath } from "../utils/auth";
 
 import LoginTopBar from "../components/login/LoginTopBar";
 import LoginForm   from "../components/login/LoginForm";
 
-// LoginPage hanya bertugas mengatur state & logic — tampilan ada di komponen masing-masing
 export default function LoginPage() {
   const navigate = useNavigate();
 
@@ -32,13 +32,13 @@ export default function LoginPage() {
     try {
       const { data } = await api.post("/auth/login", { nik, password });
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.user.role);
-      localStorage.setItem("userName", data.user.nama);
-
-      navigate(data.user.role === "admin" ? "/admin" : "/dashboard", {
-        replace: true,
+      saveAuth({
+        token: data.token,
+        role:  data.user.role,
+        nama:  data.user.nama,
       });
+
+      navigate(getRedirectPath(data.user.role), { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Login gagal. Coba lagi.");
     } finally {

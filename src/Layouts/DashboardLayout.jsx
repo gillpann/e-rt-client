@@ -1,23 +1,21 @@
 import { useState } from "react";
 import { NavLink, useNavigate, Outlet } from "react-router-dom";
 import { FiLogOut, FiMenu } from "react-icons/fi";
+import { clearAuth } from "../utils/auth";
 
-// Terima props `navItems` dan `role` biar bisa dipakai warga & admin
 export default function DashboardLayout({ navItems, role = "warga", userName = "Warga" }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("userName");
+    clearAuth();
     navigate("/login");
   };
 
   return (
     <div className="min-h-screen bg-slate-50 font-poppins flex">
 
-      {/* ── Overlay mobile ── */}
+      {/* -- Overlay mobile -- */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black/30 z-20 lg:hidden"
@@ -25,7 +23,7 @@ export default function DashboardLayout({ navItems, role = "warga", userName = "
         />
       )}
 
-      {/* ── SIDEBAR ── */}
+      {/* -- SIDEBAR -- */}
       <aside
         className={`
           fixed top-0 left-0 h-full w-60 bg-white border-r border-slate-100 z-30
@@ -113,7 +111,7 @@ export default function DashboardLayout({ navItems, role = "warga", userName = "
         </div>
       </aside>
 
-      {/* ── MAIN AREA ── */}
+      {/* -- MAIN AREA -- */}
       <div className="flex-1 flex flex-col min-w-0">
 
         {/* Top bar mobile */}

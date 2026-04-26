@@ -1,13 +1,14 @@
 import { Navigate } from "react-router-dom";
+import { getToken, getRole, getRedirectPath } from "../utils/auth";
 
 export default function ProtectedRoute({ children, allowedRole }) {
-  const token = localStorage.getItem("token");
-  const role  = localStorage.getItem("role");
+  const token = getToken();
+  const role  = getRole();
 
   if (!token) return <Navigate to="/login" replace />;
 
   if (allowedRole && role !== allowedRole) {
-    return <Navigate to={role === "admin" ? "/admin" : "/dashboard"} replace />;
+    return <Navigate to={getRedirectPath(role)} replace />;
   }
 
   return children;

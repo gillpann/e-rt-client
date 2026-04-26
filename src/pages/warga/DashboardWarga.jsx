@@ -1,5 +1,6 @@
 import DashboardLayout from "../../Layouts/DashboardLayout";
 import { FiFilePlus, FiClock } from "react-icons/fi";
+import { getUserName } from "../../utils/auth";
 
 const NAV_ITEMS = [
   {
@@ -17,12 +18,11 @@ const NAV_ITEMS = [
 ];
 
 export default function DashboardWarga() {
-  const userName = localStorage.getItem("userName") || "Warga";
   return (
     <DashboardLayout
       navItems={NAV_ITEMS}
       role="warga"
-      userName={userName}
+      userName={getUserName()}
     />
   );
 }
