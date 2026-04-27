@@ -7,6 +7,7 @@ import FilterButtons  from "../../components/admin/FilterButtons";
 import PengajuanTable from "../../components/admin/PengajuanTable";
 import DetailModal    from "../../components/admin/DetailModal";
 import Pagination     from "../../components/admin/Pagination";
+import SearchInput from "../../components/admin/SearchInput";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -14,23 +15,32 @@ export default function AdminPengajuan() {
   const {
     data,
     loading,
+    search,
+    setSearch,
+    debouncedSearch,
     selected,
-    catatan,
-    setCatatan,
     updating,
     openDetail,
     closeDetail,
     updateStatus,
   } = usePengajuan();
 
-  const [filter, setFilter]         = useState("Semua");
+  const [filter, setFilter]           = useState("Semua");
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => { setCurrentPage(1); }, [filter]);
+  useEffect(() => { setCurrentPage(1); }, [filter, debouncedSearch]);
 
-  const filtered = data.filter((d) =>
-    filter === "Semua" ? true : d.status === filter.toLowerCase()
-  );
+  const filtered = data.filter((d) => {
+    const matchFilter =
+      filter === "Semua" ? true : d.status === filter.toLowerCase();
+    const keyword = debouncedSearch.toLowerCase();
+    const matchSearch =
+      keyword === "" ? true :
+      (d.nama_pemohon || "").toLowerCase().includes(keyword) ||
+      (d.nama || "").toLowerCase().includes(keyword) ||
+      (d.kode || "").toLowerCase().includes(keyword);
+    return matchFilter && matchSearch;
+  });
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginated  = filtered.slice(
@@ -42,12 +52,11 @@ export default function AdminPengajuan() {
     menunggu: data.filter((d) => d.status === "menunggu").length,
     diproses: data.filter((d) => d.status === "diproses").length,
     selesai:  data.filter((d) => d.status === "selesai").length,
-    ditolak:  data.filter((d) => d.status === "ditolak").length,
   };
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="mb-6">
           <h1 className="font-bold text-slate-900 text-xl">Kelola Pengajuan</h1>
         </div>
@@ -59,17 +68,22 @@ export default function AdminPengajuan() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-5xl mx-auto">
       <div className="mb-6">
         <h1 className="font-bold text-slate-900 text-xl">Kelola Pengajuan</h1>
         <p className="text-slate-400 text-sm font-normal mt-1">
-          Review dan proses pengajuan surat dari warga.
+          Kelola semua pengajuan surat warga.
         </p>
       </div>
 
       <StatCards counts={counts} setFilter={setFilter} />
-
       <FilterButtons filter={filter} setFilter={setFilter} />
+
+      <SearchInput
+        search={search}
+        setSearch={setSearch}
+        placeholder="Cari nama pemohon atau kode surat..."
+      />
 
       <PengajuanTable data={paginated} onDetail={openDetail} />
 
@@ -82,8 +96,6 @@ export default function AdminPengajuan() {
       <DetailModal
         selected={selected}
         setSelected={closeDetail}
-        catatan={catatan}
-        setCatatan={setCatatan}
         updateStatus={updateStatus}
         updating={updating}
       />
