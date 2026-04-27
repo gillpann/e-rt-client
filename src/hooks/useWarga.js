@@ -12,31 +12,6 @@ const EMPTY_FORM = {
   status:   "aktif",
 };
 
-/**
- * useWarga
- * Mengelola seluruh logic CRUD data warga untuk AdminWarga.
- *
- * Returns:
- *  - warga        : semua data warga dari API
- *  - loading      : boolean saat pertama kali fetch
- *  - refetch      : reload data warga
- *
- *  - search / setSearch          : nilai search input (raw)
- *  - debouncedSearch             : nilai search setelah debounce 300ms
- *
- *  - showForm / setShowForm      : kontrol visibilitas modal form
- *  - editData                    : data warga yang sedang diedit (null = tambah baru)
- *  - form / setForm              : state form
- *  - formError                   : pesan error validasi
- *  - submitting                  : boolean saat POST/PUT berjalan
- *
- *  - hapusId / setHapusId        : id warga yang akan dihapus
- *
- *  - openTambah  : buka modal dalam mode tambah baru
- *  - openEdit    : buka modal dalam mode edit dengan data warga terpilih
- *  - handleSubmit: POST atau PUT sesuai mode
- *  - handleHapus : DELETE warga berdasar hapusId
- */
 export function useWarga() {
   const [warga, setWarga]           = useState([]);
   const [loading, setLoading]       = useState(true);

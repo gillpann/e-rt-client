@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../../api/axios";
 import toast from "react-hot-toast";
 import { getUserName } from "../../utils/auth";
+// import { jwtDecode } from "jwt-decode"; 
 
 import StepIndicator  from "../../components/warga/StepIndicator";
 import SuccessMessage from "../../components/warga/SuccessMessage";
@@ -9,12 +10,32 @@ import PilihSurat     from "../../components/warga/PilihSurat";
 import FormPengajuan  from "../../components/warga/FormPengajuan";
 import { JENIS_SURAT, KEPERLUAN_OPTIONS } from "../../utils/suratOptions";
 
+const EMPTY_FORM = {
+  jenis: "",
+  keperluan: "",
+  keterangan: "",
+  nama_pemohon: "",
+  ttl: "",
+  jenis_kelamin: "",
+  agama: "",
+  pekerjaan: "",
+  nama_kepala_keluarga: "",
+};
+
 export default function Pengajuan() {
   const [step, setStep]   = useState(1);
-  const [form, setForm]   = useState({ jenis: "", keperluan: "", keterangan: "" });
+  const [form, setForm]   = useState(EMPTY_FORM);
   const [loading, setLoading] = useState(false);
 
-  const userName = getUserName();
+  // Ambil alamat dari localStorage (disimpan saat login)
+  const userRaw = localStorage.getItem("user");
+    let alamat = "-";
+    try {
+      const user = userRaw ? JSON.parse(userRaw) : null;
+      alamat = user?.alamat || "-";
+    } catch {
+      alamat = "-";
+  }
 
   const handleChange = (field, value) => {
     setForm((prev) => ({
@@ -32,6 +53,12 @@ export default function Pengajuan() {
         jenis:      form.jenis,
         keperluan:  form.keperluan,
         keterangan: form.keterangan || undefined,
+        nama_pemohon: form.nama_pemohon,
+        ttl: form.ttl,
+        jenis_kelamin: form.jenis_kelamin,
+        agama: form.agama,
+        pekerjaan: form.pekerjaan,
+        nama_kepala_keluarga: form.nama_kepala_keluarga || undefined,
       });
       toast.success("Pengajuan berhasil dikirim!");
       setStep(3);
@@ -43,7 +70,7 @@ export default function Pengajuan() {
   };
 
   const reset = () => {
-    setForm({ jenis: "", keperluan: "", keterangan: "" });
+    setForm(EMPTY_FORM);
     setStep(1);
   };
 
@@ -76,7 +103,7 @@ export default function Pengajuan() {
           loading={loading}
           setStep={setStep}
           selectedKeperluan={selectedKeperluan}
-          userName={userName}
+          alamat={alamat}
         />
       )}
 

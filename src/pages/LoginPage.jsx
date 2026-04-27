@@ -36,6 +36,7 @@ export default function LoginPage() {
         token: data.token,
         role:  data.user.role,
         nama:  data.user.nama,
+        user:  data.user,
       });
 
       navigate(getRedirectPath(data.user.role), { replace: true });
