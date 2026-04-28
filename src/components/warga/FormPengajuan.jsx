@@ -1,6 +1,19 @@
-import { FiInfo, FiLoader } from "react-icons/fi";
+import { FiInfo, FiLoader, FiChevronDown } from "react-icons/fi";
+import { AGAMA_OPTIONS } from "../../utils/constants";
 
-const AGAMA_OPTIONS = ["Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Konghucu"];
+const SelectField = ({ value, onChange, children, required }) => (
+  <div className="relative">
+    <select
+      required={required}
+      value={value}
+      onChange={onChange}
+      className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition bg-white appearance-none cursor-pointer pr-10"
+    >
+      {children}
+    </select>
+    <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+  </div>
+);
 
 const FormPengajuan = ({
   form,
@@ -70,16 +83,15 @@ const FormPengajuan = ({
               <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Jenis Kelamin <span className="text-red-400">*</span>
               </label>
-              <select
+              <SelectField
                 required
                 value={form.jenis_kelamin}
                 onChange={(e) => handleChange("jenis_kelamin", e.target.value)}
-                className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition bg-white"
               >
                 <option value="">-- Pilih jenis kelamin --</option>
                 <option value="Laki-laki">Laki-laki</option>
                 <option value="Perempuan">Perempuan</option>
-              </select>
+              </SelectField>
             </div>
 
             {/* Agama */}
@@ -87,17 +99,16 @@ const FormPengajuan = ({
               <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Agama <span className="text-red-400">*</span>
               </label>
-              <select
+              <SelectField
                 required
                 value={form.agama}
                 onChange={(e) => handleChange("agama", e.target.value)}
-                className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 transition bg-white"
               >
                 <option value="">-- Pilih agama --</option>
                 {AGAMA_OPTIONS.map((a) => (
                   <option key={a} value={a}>{a}</option>
                 ))}
-              </select>
+              </SelectField>
             </div>
 
             {/* Pekerjaan */}

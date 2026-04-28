@@ -15,13 +15,13 @@ const PilihSurat = ({ JENIS_SURAT, handleChange, setStep }) => {
               handleChange("jenis", s.value);
               setStep(2);
             }}
-            className="flex items-center gap-3 p-4 rounded-xl border border-slate-100 hover:border-primary-300 hover:bg-primary-50 text-left transition-all group"
+            className="flex items-center gap-3 p-4 bg-white border border-slate-100 rounded-2xl text-left hover:border-primary-300 hover:bg-primary-50 hover:shadow-sm transition-all group"
           >
-            <div className="w-9 h-9 rounded-lg bg-slate-50 group-hover:bg-primary-100 border border-slate-100 flex items-center justify-center shrink-0 transition-all">
-              <FiFileText className="w-4 h-4 text-slate-400 group-hover:text-primary-700 transition-colors" />
+            <div className="w-9 h-9 bg-primary-50 group-hover:bg-primary-100 rounded-xl flex items-center justify-center shrink-0 transition-all">
+              <FiFileText className="w-4 h-4 text-primary-600" />
             </div>
 
-            <span className="text-sm font-medium text-slate-700 group-hover:text-primary-800 leading-snug">
+            <span className="text-sm font-semibold text-slate-700 group-hover:text-primary-700 transition-colors">
               {s.label}
             </span>
           </button>

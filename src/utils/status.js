@@ -21,11 +21,4 @@ export const STATUS_CONFIG = {
     border: "border-primary-100",
     dot: "bg-primary-600",
   },
-  ditolak: {
-    label: "Ditolak",
-    bg: "bg-red-50",
-    text: "text-red-600",
-    border: "border-red-100",
-    dot: "bg-red-500",
-  },
 };
