@@ -24,14 +24,14 @@ export default function Hero() {
 
           {/* Headline */}
           <h1 className="font-poppins font-bold text-4xl sm:text-5xl md:text-6xl text-slate-900 leading-tight max-w-3xl mb-5">
-            Urus Surat RT{" "}
-            <span className="text-primary-700">Tanpa Keluar Rumah</span>
+            Ajukan Surat RT{" "}
+            <span className="text-primary-700">Secara Online, Lebih Mudah</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-slate-500 text-base sm:text-lg font-normal max-w-xl leading-relaxed mb-10">
-            Platform pengajuan surat keterangan warga RT 03 secara online.
-            Ajukan, lacak, dan ambil surat, semua lewat satu tempat.
+            Isi formulir pengajuan surat keterangan secara online dari rumah.
+            Setelah diproses, surat siap diambil langsung ke pengurus RT.
           </p>
 
           {/* CTA */}
