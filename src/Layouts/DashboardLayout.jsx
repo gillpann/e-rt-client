@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, useNavigate, Outlet } from "react-router-dom";
 import { FiLogOut, FiMenu } from "react-icons/fi";
 import { clearAuth } from "../utils/auth";
+import logo from "../assets/logo.png"
 
 export default function DashboardLayout({ navItems, role = "warga", userName = "Warga" }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -34,12 +35,14 @@ export default function DashboardLayout({ navItems, role = "warga", userName = "
       >
         {/* Logo */}
         <div className="px-5 py-5 border-b border-slate-100 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-primary-700 flex items-center justify-center shrink-0 shadow-sm">
-            <span className="text-white font-bold text-sm">RT</span>
-          </div>
+          <img
+            src={logo}
+            alt="e-RT Logo"
+            className="w-12 h-12 object-contain"
+          />
           <div className="leading-tight">
-            <p className="font-semibold text-slate-800 text-sm leading-none">e-RT Warga</p>
-            <p className="text-[10px] text-slate-400 font-normal leading-none mt-0.5">RT 03 / RW 08</p>
+            <p className="font-semibold text-slate-800 text-xs leading-none">e-RT Warga</p>
+            <p className="text-[10px] text-slate-400 font-thin leading-none mt-0.5">RT 03 / RW 08</p>
           </div>
         </div>
 

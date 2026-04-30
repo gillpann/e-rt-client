@@ -1,4 +1,5 @@
 import { FiEye, FiEyeOff, FiAlertCircle, FiLoader } from "react-icons/fi";
+import logo from "../../assets/logo.png"
 
 export default function LoginForm({
   nik,
@@ -16,8 +17,12 @@ export default function LoginForm({
 
       {/* Header kartu */}
       <div className="text-center mb-7">
-        <div className="w-12 h-12 rounded-2xl bg-primary-700 flex items-center justify-center mx-auto mb-4 shadow">
-          <span className="text-white font-bold text-base">RT</span>
+        <div className="flex items-center justify-center mx-auto">
+          <img
+            src={logo}
+            alt="e-RT Logo"
+            className="w-16 h-16 object-contain"
+          />
         </div>
         <h1 className="font-bold text-slate-900 text-xl mb-1">Selamat Datang</h1>
         <p className="text-slate-400 text-xs font-normal leading-relaxed">

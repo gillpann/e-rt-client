@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { FiChevronLeft } from "react-icons/fi";
+import logo from "../../assets/logo.png"
 
 export default function LoginTopBar() {
   const navigate = useNavigate();
@@ -17,10 +18,12 @@ export default function LoginTopBar() {
       <div className="h-4 w-px bg-slate-200" />
 
       <div className="flex items-center gap-2">
-        <div className="w-6 h-6 rounded-lg bg-primary-700 flex items-center justify-center">
-          <span className="text-white font-bold text-[9px]">RT</span>
-        </div>
-        <span className="text-slate-700 font-semibold text-sm">e-RT Warga</span>
+        <img
+          src={logo}
+          alt="e-RT Logo"
+          className="w-8 h8 object-contain"
+        />
+        <span className="text-slate-700 font-semibold text-xs">e-RT Warga</span>
       </div>
     </div>
   );

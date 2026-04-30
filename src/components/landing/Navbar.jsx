@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
+import logo from "../../assets/logo.png"
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,13 +32,11 @@ export default function Navbar() {
 
             {/* Logo — desktop only */}
             <div className="hidden md:flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-primary-700 flex items-center justify-center shadow-sm">
-                <span className="text-white font-bold text-sm tracking-tight">RT</span>
-              </div>
-              <div className="leading-tight">
-                <p className="font-semibold text-slate-800 text-sm leading-none">e-RT Warga</p>
-                <p className="text-[10px] text-slate-400 font-normal leading-none mt-0.5">RT 03 / RW 08</p>
-              </div>
+              <img
+                src={logo}
+                alt="e-RT Logo"
+                className="w-16 h-16 object-contain"
+              />
             </div>
           </div>
 
