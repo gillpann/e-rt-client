@@ -1,14 +1,46 @@
-import { FiHome, FiCreditCard, FiTruck } from "react-icons/fi";
+import { FiHome, FiCreditCard, FiTruck, FiClock, FiLoader, FiCheck } from "react-icons/fi";
 import { MdOutlineVolunteerActivism, MdOutlineStorefront, MdOutlineArticle } from "react-icons/md";
+
+
 
 export const AGAMA_OPTIONS = [
   "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Konghucu",
 ];
 
 export const STAT_CARDS = [
-  { key: "menunggu", label: "Menunggu", color: "text-amber-600", bg: "bg-amber-50",    border: "border-amber-100"   },
-  { key: "diproses", label: "Diproses", color: "text-blue-600",  bg: "bg-blue-50",     border: "border-blue-100"    },
-  { key: "selesai",  label: "Selesai",  color: "text-primary-700", bg: "bg-primary-50", border: "border-primary-100" },
+  {
+    key: "menunggu",
+    label: "Menunggu",
+    bg: "bg-amber-50",
+    border: "border-amber-300",
+    color: "text-amber-800",
+    labelColor: "text-amber-600",
+    iconBg: "bg-amber-200",
+    iconColor: "text-amber-800",
+    Icon: FiClock,
+  },
+  {
+    key: "diproses",
+    label: "Diproses",
+    bg: "bg-blue-50",
+    border: "border-blue-300",
+    color: "text-blue-800",
+    labelColor: "text-blue-500",
+    iconBg: "bg-blue-200",
+    iconColor: "text-blue-800",
+    Icon: FiLoader,
+  },
+  {
+    key: "selesai",
+    label: "Selesai",
+    bg: "bg-green-50",
+    border: "border-green-300",
+    color: "text-green-800",
+    labelColor: "text-green-600",
+    iconBg: "bg-green-200",
+    iconColor: "text-green-800",
+    Icon: FiCheck,
+  },
 ];
 
 export const FILTER_LABELS = ["Semua", "Menunggu", "Diproses", "Selesai"];
