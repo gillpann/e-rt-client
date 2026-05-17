@@ -1,6 +1,6 @@
 import { FiX, FiPrinter, FiCheckCircle } from "react-icons/fi";
 import { useState } from "react";
-import { STATUS_CONFIG } from "../../utils/Status";
+import { STATUS_CONFIG } from "../../utils/status";
 import { formatTanggal } from "../../utils/format";
 import Modal from "../common/Modal";
 import api from "../../api/axios";

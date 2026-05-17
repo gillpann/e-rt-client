@@ -1,4 +1,4 @@
-import { STATUS_CONFIG } from "../../utils/Status";
+import { STATUS_CONFIG } from "../../utils/status";
 
 const StatusBadge = ({ status }) => {
   const cfg = STATUS_CONFIG[status];

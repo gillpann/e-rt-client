@@ -1,5 +1,5 @@
 import { formatTanggal } from "../../utils/format";
-import { STATUS_CONFIG } from "../../utils/Status";
+import { STATUS_CONFIG } from "../../utils/status";
 import { FiClock, FiRefreshCw, FiCheckCircle, FiFileText } from "react-icons/fi";
 
 const STATUS_ICON = {
