@@ -8,7 +8,6 @@ export const getToken    = ()  => localStorage.getItem(KEYS.TOKEN);
 export const getRole     = ()  => localStorage.getItem(KEYS.ROLE);
 export const getUserName = ()  => localStorage.getItem(KEYS.USER_NAME) || "Pengguna";
 
-// utils/auth.js — tambahkan ini
 export const saveAuth = ({ token, role, nama, user }) => {
   localStorage.setItem(KEYS.TOKEN,     token);
   localStorage.setItem(KEYS.ROLE,      role);
@@ -18,6 +17,7 @@ export const saveAuth = ({ token, role, nama, user }) => {
 
 export const clearAuth = () => {
   Object.values(KEYS).forEach((key) => localStorage.removeItem(key));
+  localStorage.removeItem("user"); 
 };
 
 export const getRedirectPath = (role) =>

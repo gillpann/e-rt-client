@@ -1,8 +1,6 @@
 import { FiHome, FiCreditCard, FiTruck, FiClock, FiLoader, FiCheck } from "react-icons/fi";
 import { MdOutlineVolunteerActivism, MdOutlineStorefront, MdOutlineArticle } from "react-icons/md";
 
-
-
 export const AGAMA_OPTIONS = [
   "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Konghucu",
 ];

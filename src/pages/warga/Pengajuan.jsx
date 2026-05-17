@@ -2,7 +2,6 @@ import { useState } from "react";
 import api from "../../api/axios";
 import toast from "react-hot-toast";
 import { getUserName } from "../../utils/auth";
-// import { jwtDecode } from "jwt-decode"; 
 
 import StepIndicator  from "../../components/warga/StepIndicator";
 import SuccessMessage from "../../components/warga/SuccessMessage";
